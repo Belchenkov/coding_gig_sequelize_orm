@@ -1,0 +1,21 @@
+{
+  "name": "codegig",
+  "version": "1.0.0",
+  "description": "Simple job find app for coders",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Belchenkov/coding_gig_sequelize_orm.git"
+  },
+  "keywords": [
+    "Nodejs",
+    "Expressjs",
+    "Sequelize",
+    "Postgres"
+  ],
+  "author": "Aleksey Belchenkob",
+  "license": "MIT"
+}
