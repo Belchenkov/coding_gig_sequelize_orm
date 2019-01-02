@@ -19,26 +19,51 @@ router.get('/add', (req, res) => res.render('add'));
 
 // Add a gig
 router.post('/add', (req, res) => {
-    const data = {
-        title: 'Simple Nodejs Website',
-        technologies: 'nodejs, js, html, css',
-        budget: '$1000',
-        description: ' Etiam elit leo, lacinia sit amet sapien ac, feugiat hendrerit lorem. Duis sem odio, bibendum ac interdum sit amet, volutpat non est. Sed blandit dolor eget purus euismod, vel elementum mi pretium. Donec maximus, turpis ut gravida pretium, mi felis consequat mi, sed eleifend massa eros sit amet lectus. Phasellus quis nunc sit amet ipsum convallis dictum at non sapien. Nam scelerisque sodales arcu, ac tincidunt risus pretium in.',
-        contact_email: 'user2@gmail.com'
-    };
 
-    let {title, technologies, budget, description, contact_email} = data;
+    let {title, technologies, budget, description, contact_email} = req.body;
+    let errors = [];
 
-    // Insert to table
-    Gig.create({
-        title,
-        technologies,
-        budget,
-        description,
-        contact_email
-    })
-    .then(gig => res.redirect('/gigs'))
-    .catch(err => console.log(err));
+    // Validate Fields
+    if (!title) {
+        errors.push({ text: 'Please add a title' });
+    }
+
+    if (!technologies) {
+        errors.push({ text: 'Please add a technologies' });
+    }
+
+    if (!description) {
+        errors.push({ text: 'Please add a description' });
+    }
+
+    if (!contact_email) {
+        errors.push({ text: 'Please add a contact email' });
+    }
+
+    // Check for errors
+    if (errors.length > 0) {
+        res.render('add', {
+            errors,
+            title,
+            technologies,
+            budget,
+            description,
+            contact_email
+        });
+    } else {
+        // Insert to table
+        Gig.create({
+            title,
+            technologies,
+            budget,
+            description,
+            contact_email
+        })
+            .then(gig => res.redirect('/gigs'))
+            .catch(err => console.log(err));
+    }
+
+
 });
 
 module.exports = router;
